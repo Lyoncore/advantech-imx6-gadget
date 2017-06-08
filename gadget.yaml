@@ -5,6 +5,18 @@ volumes:
     bootloader: u-boot
     schema: mbr
     structure:
+      - name: u-boot-crc
+        type: bare
+        size: 9
+        offset: 1024
+        content:
+          - image: u-boot_crc.bin.crc
+      - name: u-boot
+        type: bare
+        size: 614400
+        offset: 1536
+        content:
+          - image: u-boot_crc.bin
       - name: system-boot
         type: 0C
         filesystem: vfat
