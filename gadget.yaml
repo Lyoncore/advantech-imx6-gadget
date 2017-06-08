@@ -5,7 +5,8 @@ volumes:
     bootloader: u-boot
     schema: mbr
     structure:
-      - type: 0C
+      - name: system-boot
+        type: 0C
         filesystem: vfat
         filesystem-label: system-boot
         size: 128M

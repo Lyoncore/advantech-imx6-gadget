@@ -21,10 +21,11 @@ parts:
     build: |
       CROSS_COMPILE=arm-linux-gnueabi- make u-boot.imx all
     install: |
+      mkdir -p $SNAPCRAFT_PART_INSTALL/boot-assets/
       cp u-boot_crc.bin* $SNAPCRAFT_PART_INSTALL/
       tools/mkenvimage -r -s 131072 -o $SNAPCRAFT_PART_INSTALL/uboot.env ../../../uboot.env.in
       tools/mkimage -A arm -T script -C none -n 'Ubuntu Core' -d ../../../boot.scr.in boot.scr
-      cp boot.scr $SNAPCRAFT_PART_INSTALL/
+      cp boot.scr $SNAPCRAFT_PART_INSTALL/boot-assets/
       cd $SNAPCRAFT_PART_INSTALL/; ln -s uboot.env uboot.conf
     build-packages:
       - libpython2.7-dev
