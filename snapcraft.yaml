@@ -1,0 +1,33 @@
+name: advantech-imx6-gadget
+version: 16.04-1.0
+summary: Advantech i.MX6
+description: |
+ Bootloader files and partitoning data to create a
+ bootable Ubuntu Core image for Advantech ROM-4411-A1
+type: gadget
+architectures:
+    - armhf
+confinement: strict
+grade: stable
+
+parts:
+  uboot:
+    plugin: make
+    source: https://github.com/ADVANTECH-Corp/uboot-imx6.git
+    source-branch: imx_v2016.03_4.1.15_2.0.0_ga
+    artifacts: [u-boot_crc.bin, u-boot_crc.bin.crc]
+    prepare: |
+      make mx6qrsb4411a1_1G_config
+    build: |
+      CROSS_COMPILE=arm-linux-gnueabi- make u-boot.imx all
+    install: |
+      cp u-boot_crc.bin* $SNAPCRAFT_PART_INSTALL/
+      tools/mkenvimage -r -s 131072 -o $SNAPCRAFT_PART_INSTALL/uboot.env ../../../uboot.env.in
+      tools/mkimage -A arm -T script -C none -n 'Ubuntu Core' -d ../../../boot.scr.in boot.scr
+      cp boot.scr $SNAPCRAFT_PART_INSTALL/
+      cd $SNAPCRAFT_PART_INSTALL/; ln -s uboot.env uboot.conf
+    build-packages:
+      - libpython2.7-dev
+      - build-essential
+      - bc
+      - gcc-arm-linux-gnueabi
