@@ -6,7 +6,7 @@ description: |
  bootable Ubuntu Core image for Advantech ROM-4411-A1
 type: gadget
 architectures:
-    - armhf
+  - armhf
 confinement: strict
 grade: stable
 
@@ -19,7 +19,7 @@ parts:
     prepare: |
       make mx6qrsb4411a1_1G_config
     build: |
-      CROSS_COMPILE=arm-linux-gnueabi- make u-boot.imx all
+      CROSS_COMPILE=arm-linux-gnueabihf- make u-boot.imx all
     install: |
       mkdir -p $SNAPCRAFT_PART_INSTALL/boot-assets/
       cp u-boot_crc.bin* $SNAPCRAFT_PART_INSTALL/
@@ -28,7 +28,6 @@ parts:
       cp boot.scr $SNAPCRAFT_PART_INSTALL/boot-assets/
       cd $SNAPCRAFT_PART_INSTALL/; ln -s uboot.env uboot.conf
     build-packages:
-      - libpython2.7-dev
       - build-essential
       - bc
-      - gcc-arm-linux-gnueabi
+      - gcc-5-arm-linux-gnueabihf
