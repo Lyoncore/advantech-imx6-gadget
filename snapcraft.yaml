@@ -14,7 +14,7 @@ parts:
   uboot:
     plugin: nil
     source: https://github.com/ADVANTECH-Corp/uboot-imx6.git
-    source-branch: imx_v2016.03_4.1.15_2.0.0_ga
+    source-branch: imx_v2017.03_4.9.11_1.0.0_ga
     override-build: |
       make mx6qrsb4411a1_1G_config
 
